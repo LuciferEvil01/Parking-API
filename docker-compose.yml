@@ -1,0 +1,25 @@
+project= "Parking API" file="docker-compose.yml" type="code" version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - mongo
+    environment:
+      - DATABASE_URL=postgres://user:password@postgres:5432/parking_db
+      - MONGODB_URI=mongodb://mongo:27017/parking_logs
+      - JWT_SECRET=your_jwt_secret
+
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=parking_db
+
+  mongo:
+    image: mongo:4.4
+
